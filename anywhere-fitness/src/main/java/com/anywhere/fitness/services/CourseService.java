@@ -28,5 +28,20 @@ public interface CourseService
      */
     List<Course> findByInstructor(String username);
 
+    /**
+     * Returns a list Containing all courses that start at the given int time.
+     *
+     * @return List of matched Courses. If no match, empty List.
+     */
+    List<Course> findByStarttime(int time);
+
+    Course save(Course course);
+
+    void deleteAll();
+
+
+
+
+
 
 }

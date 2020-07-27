@@ -10,4 +10,6 @@ public interface CourseRepository extends CrudRepository<Course, Long>
     List<Course> findByCoursenameContainingIgnoreCase(String name);
 
     List<Course> findCoursesByInstructor_Username(String username);
+
+    List<Course> findByStarttime(int starttime);
 }
