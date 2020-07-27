@@ -37,4 +37,22 @@ public class CourseServiceImpl
     {
         return courserepo.findCoursesByInstructor_Username(username);
     }
+
+    @Override
+    public List<Course> findByStarttime(int time)
+    {
+        return null;
+    }
+
+    @Override
+    public Course save(Course course)
+    {
+        return courserepo.save(course);
+    }
+
+    @Override
+    public void deleteAll()
+    {
+        courserepo.deleteAll();
+    }
 }

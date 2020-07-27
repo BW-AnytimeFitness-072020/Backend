@@ -1,9 +1,13 @@
 package com.anywhere.fitness.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -126,5 +130,21 @@ public class User extends Auditable
     public void setInstructorcourses(Set<Course> instructorcourses)
     {
         this.instructorcourses = instructorcourses;
+    }
+
+    @JsonIgnore
+    public List<SimpleGrantedAuthority> getAuthority()
+    {
+        List<SimpleGrantedAuthority> rtnList = new ArrayList<>();
+
+        for (UserRole r : this.roles)
+        {
+            String myRole = "ROLE_" + r.getRole()
+                    .getName()
+                    .toUpperCase();
+            rtnList.add(new SimpleGrantedAuthority(myRole));
+        }
+
+        return rtnList;
     }
 }
