@@ -36,7 +36,8 @@ public class User extends Auditable
     private Set<UserRole> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = "user", allowSetters = true)
+//    @JsonIgnoreProperties(value = "user", allowSetters = true)
+    @JsonIgnore
     private Set<UserCourse> courses = new HashSet<>();
 
     public User()

@@ -29,18 +29,13 @@ public class SeedData
      */
     @Autowired
     RoleService roleService;
-
     /**
      * Connects the user service to this process
      */
     @Autowired
     UserService userService;
-
-
-
     @Autowired
     CourseService courseService;
-
     /**
      * Generates test, seed data for our application
      * First a set of known data is seeded into our database.
@@ -58,61 +53,47 @@ public class SeedData
         userService.deleteAll();
         roleService.deleteAll();
         courseService.deleteAll();
-
-
-
         Role r1 = new Role("admin");
         Role r2 = new Role("user");
 //        Role r3 = new Role("data");
-
         r1 = roleService.save(r1);
         r2 = roleService.save(r2);
 //        r3 = roleService.save(r3);
-
         // admin, data, user
         User u1 = new User("admin",
-                           "password",
-                           "admin@lambdaschool.local");
+                "password",
+                "admin@lambdaschool.local");
         u1.getRoles()
                 .add(new UserRole(u1, r1));
         u1.getRoles()
                 .add(new UserRole(u1, r2));
-
-
         u1 = userService.save(u1);
-
         // data, user
         User u2 = new User("cinnamon",
-                           "1234567",
-                           "cinnamon@lambdaschool.local");
+                "1234567",
+                "cinnamon@lambdaschool.local");
         u2.getRoles()
                 .add(new UserRole(u2,r2));
-
         u2 = userService.save(u2);
-
         // user
         User u3 = new User("barnbarn",
-                           "ILuvM4th!",
-                           "barnbarn@lambdaschool.local");
+                "ILuvM4th!",
+                "barnbarn@lambdaschool.local");
         u3.getRoles()
                 .add(new UserRole(u3, r1));
-
         u3 = userService.save(u3);
-
         User u4 = new User("puttat",
-                           "password",
-                           "puttat@school.lambda");
+                "password",
+                "puttat@school.lambda");
         u4.getRoles()
                 .add(new UserRole(u4, r2));
-        u2 = userService.save(u4);
-
+        u4 = userService.save(u4);
         User u5 = new User("misskitty",
-                           "password",
-                           "misskitty@school.lambda");
+                "password",
+                "misskitty@school.lambda");
         u5.getRoles()
                 .add(new UserRole(u5, r1));
         u5 = userService.save(u5);
-
         /************
          * Seed course
          ************/
@@ -146,23 +127,38 @@ public class SeedData
         c8.getUsers().add(new UserCourse(u4,c8));
         c8.getUsers().add(new UserCourse(u2,c8));
         c9.getUsers().add(new UserCourse(u2,c9));
+//        u4.getRoles()
+//                .add(new UserRole(u4, r2));
+//        u4 = userService.save(u4);
+//        u5.getRoles()
+//                .add(new UserRole(u5, r1));
+//        u5 = userService.save(u5);
+//        u3.getRoles()
+//                .add(new UserRole(u3, r1));
+//        u3 = userService.save(u3);
+//        u2.getRoles()
+//                .add(new UserRole(u2,r2));
+//        u2 = userService.save(u2);
+//
+//        u1.getRoles()
+//                .add(new UserRole(u1, r1));
+//        u1.getRoles()
+//                .add(new UserRole(u1, r2));
+//        u1 = userService.save(u1);
+        userService.save(u2);
+        userService.save(u4);
+        userService.save(u5);
 
-
-
-
-        u2 = userService.save(u2);
-        u4 = userService.save(u4);
-        u5 = userService.save(u5);
-
-        c1 = courseService.save(c1);
-        c2 = courseService.save(c2);
-        c3 = courseService.save(c3);
-        c4 = courseService.save(c4);
-        c5 = courseService.save(c5);
-        c6 = courseService.save(c6);
-        c7 = courseService.save(c7);
-        c8 = courseService.save(c8);
-        c9 = courseService.save(c9);
-        c10 = courseService.save(c10);
+        courseService.save(c1);
+        courseService.save(c2);
+        courseService.save(c3);
+        courseService.save(c4);
+        courseService.save(c5);
+        courseService.save(c6);
+        courseService.save(c7);
+        courseService.save(c8);
+        courseService.save(c9);
+        courseService.save(c10);
+        System.out.println("hello ending");
     }
 }
