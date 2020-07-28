@@ -59,7 +59,7 @@ public class SeedData
         r1 = roleService.save(r1);
         r2 = roleService.save(r2);
 //        r3 = roleService.save(r3);
-        // admin, data, user
+        // admin, user
         User u1 = new User("admin",
                 "password",
                 "admin@lambdaschool.local");
