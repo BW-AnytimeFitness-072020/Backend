@@ -3,6 +3,7 @@ package com.anywhere.fitness.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -36,8 +37,8 @@ public class User extends Auditable
     private Set<UserRole> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    @JsonIgnoreProperties(value = "user", allowSetters = true)
-    @JsonIgnore
+    @JsonIgnoreProperties(value = "user", allowSetters = true)
+//    @JsonIgnore
     private Set<UserCourse> courses = new HashSet<>();
 
     public User()
@@ -88,20 +89,17 @@ public class User extends Auditable
         return password;
     }
 
-    public void setPassword(String password)
+    public void setPasswordNoEncrypt(String password)
     {
         this.password = password;
     }
 
-    public Set<UserCourse> getClasses()
+    public void setPassword(String password)
     {
-        return courses;
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.password = password;//Encoder.encode(password);
     }
 
-    public void setClasses(Set<UserCourse> courses)
-    {
-        this.courses = courses;
-    }
 
     public Set<UserRole> getRoles()
     {

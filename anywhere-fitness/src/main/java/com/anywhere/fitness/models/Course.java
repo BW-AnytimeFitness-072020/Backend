@@ -33,13 +33,15 @@ public class Course extends Auditable
 
     @ManyToOne
     @JoinColumn(name = "instructorid")
-    @JsonIgnoreProperties(value = "instructorcourses", allowSetters = true)
+    @JsonIgnoreProperties(value = {"instructorcourses", "courses"}, allowSetters = true)
+
 //    @Column(nullable = false)
+//    @JsonIgnore
     private User instructor;
 
     @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
-//    @JsonIgnoreProperties(value = "course", allowSetters = true)
-    @JsonIgnore
+    @JsonIgnoreProperties(value = "course", allowSetters = true)
+//    @JsonIgnore
     private Set<UserCourse> users = new HashSet<>();
 
     public Course()
