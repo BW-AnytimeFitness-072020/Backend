@@ -39,13 +39,10 @@ public interface CourseService
 
     Course save(Course course);
 
+    Course update(Course course, long id);
+
     void delete(long id);
 
     void deleteAll();
-
-
-
-
-
 
 }

@@ -39,6 +39,34 @@ public class CourseController {
                 HttpStatus.CREATED);
     }
 
+    //UPDATE mapping
+    @PutMapping(value = "/courses/{id}",
+            consumes = "application/json")
+    public ResponseEntity<?> updateFullCourse(
+            @Valid
+            @RequestBody
+                    Course updateCourse,
+            @PathVariable
+                    long id)
+    {
+        updateCourse.setCourseid(id);
+        courseService.save(updateCourse);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    //Search mapping
+
+
+    //class time
+    //class date
+    //class duration
+    //class type
+    //intensity level
+    //class location
+
+
     //http://localhost:2019/courses/courses{id}
     @DeleteMapping(value = "/courses/{id}")
     public ResponseEntity<?> deleteByCourseId(@PathVariable long id) {
