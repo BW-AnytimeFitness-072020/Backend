@@ -14,6 +14,8 @@ public interface CourseService
      */
     List<Course> findAllCourses();
 
+    Course findCourseById(long id);
+
     /**
      * Returns a list Containing all courses that contain the given String
      *
@@ -36,6 +38,8 @@ public interface CourseService
     List<Course> findByStarttime(int time);
 
     Course save(Course course);
+
+    void delete(long id);
 
     void deleteAll();
 

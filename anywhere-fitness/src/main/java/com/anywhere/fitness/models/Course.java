@@ -1,5 +1,6 @@
 package com.anywhere.fitness.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -32,12 +33,13 @@ public class Course extends Auditable
 
     @ManyToOne
     @JoinColumn(name = "instructorid")
-    @JsonIgnoreProperties(value = "courses", allowSetters = true)
+    @JsonIgnoreProperties(value = "instructorcourses", allowSetters = true)
 //    @Column(nullable = false)
     private User instructor;
 
     @OneToMany(mappedBy = "course",cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = "course", allowSetters = true)
+//    @JsonIgnoreProperties(value = "course", allowSetters = true)
+    @JsonIgnore
     private Set<UserCourse> users = new HashSet<>();
 
     public Course()
