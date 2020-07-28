@@ -82,7 +82,35 @@ public class CourseServiceImpl
         }
 
         return courserepo.save(newCourse);
-//        return courserepo.save(course);
+    }
+
+    @Transactional
+    @Override
+    public Course update(Course course, long id) {
+        Course currentCourse = findCourseById(id);
+
+        if (course.getCoursename() != null) {
+            currentCourse.setCoursename(course.getCoursename());
+        }
+        if (course.hasvalueforduration) {
+            currentCourse.setDuration(course.getDuration());
+        }
+        if (course.getIntensitylevel() != null) {
+            currentCourse.setIntensitylevel(course.getIntensitylevel());
+        }
+        if (course.getLocation() != null) {
+            currentCourse.setLocation(course.getLocation());
+        }
+        if (course.hasvalueforsizecapacity) {
+            currentCourse.setSizecapacity(course.getSizecapacity());
+        }
+        if (course.hasvalueforstarttime) {
+            currentCourse.setStarttime(course.getStarttime());
+        }
+        if (course.getType() != null) {
+            currentCourse.setType(course.getType());
+        }
+        return courserepo.save(currentCourse);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.anywhere.fitness.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -20,15 +19,23 @@ public class Course extends Auditable
 
     private String type;
 
+    @org.springframework.data.annotation.Transient
+    public boolean hasvalueforstarttime = false;
     private int starttime;
 
+    @org.springframework.data.annotation.Transient
+    public boolean hasvalueforduration = false;
     private int duration;
 
     private String intensitylevel;
 
     private String location;
 
+    @org.springframework.data.annotation.Transient
+    public boolean hasvalueforsizecapacity = false;
     private long sizecapacity;
+
+
 
 
     @ManyToOne
@@ -128,6 +135,7 @@ public class Course extends Auditable
 
     public void setStarttime(int starttime)
     {
+        hasvalueforstarttime = true;
         this.starttime = starttime;
     }
 
@@ -138,6 +146,7 @@ public class Course extends Auditable
 
     public void setDuration(int duration)
     {
+        hasvalueforduration = true;
         this.duration = duration;
     }
 
@@ -168,6 +177,7 @@ public class Course extends Auditable
 
     public void setSizecapacity(long sizecapacity)
     {
+        hasvalueforsizecapacity = true;
         this.sizecapacity = sizecapacity;
     }
 
