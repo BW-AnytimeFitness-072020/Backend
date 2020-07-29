@@ -109,4 +109,12 @@ public class UserServiceImpl implements UserService
         }
 
     }
+
+    @Override
+    public User findByName(String name)
+    {
+        User u = userrepo.findByUsername(name.toLowerCase());
+
+        return u;
+    }
 }

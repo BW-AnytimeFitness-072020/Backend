@@ -1,10 +1,13 @@
 package com.anywhere.fitness.controllers;
 
 import com.anywhere.fitness.models.Course;
+import com.anywhere.fitness.models.User;
 import com.anywhere.fitness.services.CourseService;
+import com.anywhere.fitness.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,6 +18,9 @@ import java.util.List;
 public class CourseController {
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    private UserService userService;
 
     // http://localhost:2019/courses/courses
     @GetMapping(value = "/courses", produces = {"application/json"})
@@ -72,5 +78,15 @@ public class CourseController {
     public ResponseEntity<?> deleteByCourseId(@PathVariable long id) {
         courseService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+//    TODO: figure out how to get the authenticated users username from a GET request.
+    @GetMapping(value = "/userinfo",
+            produces = {"application/json"})
+    public ResponseEntity<?> getCurrentUserInfo()
+    {
+        User u = userService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
+//        System.out.println(u.getUsername()); //nullPointerException
+        return new ResponseEntity<>(u,
+                HttpStatus.OK);
     }
 }
