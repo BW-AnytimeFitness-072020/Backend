@@ -17,4 +17,5 @@ public interface UserService
 
 
     void deleteAll();
+    User findByName(String name);
 }
