@@ -68,4 +68,45 @@ public class UserServiceImpl implements UserService
     {
         userrepo.deleteAll();
     }
+
+    @Override
+    public User update(User user)
+    {
+        return null;
+    }
+
+    @Override
+    public void delete(long id)
+    {
+        if(userrepo.findById(id).isPresent())
+        {
+            userrepo.deleteById(id);
+        }else
+        {
+            throw new ResourceNotFoundException("User ID: " + id + " Not Found...");
+        }
+    }
+
+    @Override
+    public User addUserCourse(long courseid, String username)
+    {
+        User u = userrepo.findByUsername(username.toLowerCase());
+        Course c = courseService.findCourseById(courseid);
+        u.getCourses().add(new UserCourse(u,c));
+
+        return null;
+    }
+
+    @Override
+    public void removeUserCourse(long courseid, String username)
+    {
+        User u = userrepo.findByUsername(username.toLowerCase());
+        Course c = courseService.findCourseById(courseid);
+        for(UserCourse uc : u.getCourses()){
+            if(uc.getCourse().getCourseid() == courseid){
+                u.getCourses().remove(uc);
+            }
+        }
+
+    }
 }

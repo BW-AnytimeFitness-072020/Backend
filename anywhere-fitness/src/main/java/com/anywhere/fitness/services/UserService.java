@@ -7,5 +7,14 @@ public interface UserService
 
     User save(User user);
 
+    User update(User user);
+
+    void delete(long id);
+
+    User addUserCourse(long courseid, String username);
+
+    void removeUserCourse(long courseid, String username);
+
+
     void deleteAll();
 }
