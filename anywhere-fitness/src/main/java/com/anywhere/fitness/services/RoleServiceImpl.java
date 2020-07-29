@@ -109,9 +109,9 @@ public class RoleServiceImpl
         Role newRole = findRoleById(id); // see if id exists
 
         rolerepos.updateRoleName(userAuditing.getCurrentAuditor()
-                                         .get(),
-                                 id,
-                                 role.getName());
+                        .get(),
+                id,
+                role.getName());
         return findRoleById(id);
     }
 }

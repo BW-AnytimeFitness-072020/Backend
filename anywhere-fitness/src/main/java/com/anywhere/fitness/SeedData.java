@@ -53,7 +53,7 @@ public class SeedData
         userService.deleteAll();
         roleService.deleteAll();
         courseService.deleteAll();
-        Role r1 = new Role("admin");
+        Role r1 = new Role("ADMIN");
         Role r2 = new Role("user");
 //        Role r3 = new Role("data");
         r1 = roleService.save(r1);
@@ -62,7 +62,7 @@ public class SeedData
         // admin, user
         User u1 = new User("admin",
                 "password",
-                "admin@lambdaschool.local");
+                "$2a$04$ipZV/EonKZrdrlyKIJGLH.awQjAprT6Taf8MIRIS//yqjaYfrxYwa");
         u1.getRoles()
                 .add(new UserRole(u1, r1));
         u1.getRoles()
@@ -71,14 +71,14 @@ public class SeedData
         // data, user
         User u2 = new User("cinnamon",
                 "1234567",
-                "cinnamon@lambdaschool.local");
+                "$2a$04$ipZV/EonKZrdrlyKIJGLH.awQjAprT6Taf8MIRIS//yqjaYfrxYwa");
         u2.getRoles()
                 .add(new UserRole(u2,r2));
         u2 = userService.save(u2);
         // user
         User u3 = new User("barnbarn",
                 "ILuvM4th!",
-                "barnbarn@lambdaschool.local");
+                "$2a$04$ipZV/EonKZrdrlyKIJGLH.awQjAprT6Taf8MIRIS//yqjaYfrxYwa");
         u3.getRoles()
                 .add(new UserRole(u3, r1));
         u3 = userService.save(u3);
@@ -90,7 +90,7 @@ public class SeedData
         u4 = userService.save(u4);
         User u5 = new User("misskitty",
                 "password",
-                "misskitty@school.lambda");
+                "$2a$04$ipZV/EonKZrdrlyKIJGLH.awQjAprT6Taf8MIRIS//yqjaYfrxYwa");
         u5.getRoles()
                 .add(new UserRole(u5, r1));
         u5 = userService.save(u5);
