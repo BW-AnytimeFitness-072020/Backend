@@ -159,6 +159,6 @@ public class SeedData
         courseService.save(c8);
         courseService.save(c9);
         courseService.save(c10);
-        System.out.println("hello ending");
+//        System.out.println("hello ending");
     }
 }

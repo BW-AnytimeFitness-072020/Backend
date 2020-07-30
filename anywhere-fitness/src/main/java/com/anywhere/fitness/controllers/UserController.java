@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -37,6 +38,18 @@ public class UserController {
     @DeleteMapping(value = "/user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable long id){
         userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/users", produces = {"application/json"})
+    public ResponseEntity<?> listAllUsers(){
+        List<User> rtn = userService.findAllUsers();
+        return new ResponseEntity<>(rtn, HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "/user/{id}", produces = {"application/json"})
+    public ResponseEntity<?> patchUser(@RequestBody User user, @PathVariable long id){
+        userService.update(user, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

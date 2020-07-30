@@ -13,6 +13,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import static springfox.documentation.builders.PathSelectors.regex;
+
 /**
  * Configures the default Swagger Documentation
  */
@@ -32,7 +34,7 @@ public class Swagger2Config
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors
-                              .basePackage("com.lambdaschool.bookstore"))
+                              .basePackage("com.anywhere.fitness"))
                 .paths(PathSelectors.regex("/.*"))
                 .build()
                 .apiInfo(apiEndPointsInfo());
@@ -45,13 +47,13 @@ public class Swagger2Config
      */
     private ApiInfo apiEndPointsInfo()
     {
-        return new ApiInfoBuilder().title("Bookstore Model Example")
-                .description("Bookstore Model Example")
-                .contact(new Contact("John Mitchell",
-                                     "http://www.lambdaschool.com",
-                                     "john@lambdaschool.com"))
+        return new ApiInfoBuilder().title("Anytime Fitness Api")
+                .description("Anytime Fitness api")
+                .contact(new Contact("Joshua Williams",
+                                     "http://www.github.com/code-dependent",
+                                     "jlw23339@gmail.com"))
                 .license("MIT")
-                .licenseUrl("https://github.com/LambdaSchool/java-usermodel/blob/master/LICENSE")
+                .licenseUrl("N/A")
                 .version("1.0.0")
                 .build();
     }
