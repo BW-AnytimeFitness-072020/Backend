@@ -47,6 +47,8 @@ public interface CourseService
 
     List<Course> findByLocation(String location);
 
+    Course save(Course course, String username);
+
     Course save(Course course);
 
     Course update(Course course, long id);

@@ -39,8 +39,9 @@ public class CourseController {
     //http://localhost:2019/courses/course
     @PostMapping(value = "/course", consumes = "application/json")
     public ResponseEntity<?> addNewCourse(@Valid @RequestBody Course newCourse) {
+        User u = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
         newCourse.setCourseid(0);
-        newCourse = courseService.save(newCourse);
+        newCourse = courseService.save(newCourse, SecurityContextHolder.getContext().getAuthentication().getName());
         return new ResponseEntity<>(null,
                 HttpStatus.CREATED);
     }
@@ -56,7 +57,7 @@ public class CourseController {
                     long id)
     {
         updateCourse.setCourseid(id);
-        courseService.save(updateCourse);
+        courseService.save(updateCourse, SecurityContextHolder.getContext().getAuthentication().getName());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -103,6 +104,7 @@ public class CourseController {
         List<Course> c = courseService.findByLocation(location);
         return new ResponseEntity<>(c, HttpStatus.OK);
     }
+
 
 
     //class time
