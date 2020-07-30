@@ -50,7 +50,32 @@ public class CourseServiceImpl
     @Override
     public List<Course> findByStarttime(int time)
     {
-        return null;
+        return courserepo.findByStarttime(time);
+    }
+
+    @Override
+    public List<Course> findByDuration(int duration) {
+        return courserepo.findByDuration(duration);
+    }
+
+    @Override
+    public List<Course> findByType(String type) {
+        return courserepo.findByType(type);
+    }
+
+    @Override
+    public List<Course> findByLocation(String location) {
+        return courserepo.findByLocation(location);
+    }
+
+    @Override
+    public List<Course> findByStartdate(String startdate) {
+        return courserepo.findByStartdate(startdate);
+    }
+
+    @Override
+    public List<Course> findByIntensitylevel(String intensitylevel) {
+        return courserepo.findByIntensitylevel(intensitylevel);
     }
 
     @Transactional
@@ -75,6 +100,7 @@ public class CourseServiceImpl
         newCourse.setSizecapacity(course.getSizecapacity());
         newCourse.setStarttime(course.getStarttime());
         newCourse.setType(course.getType());
+        newCourse.setStartdate(course.getStartdate());
 
         newCourse.getUsers().clear();
         for(UserCourse uc : course.getUsers()) {
@@ -109,6 +135,9 @@ public class CourseServiceImpl
         }
         if (course.getType() != null) {
             currentCourse.setType(course.getType());
+        }
+        if (course.getStartdate() != null) {
+            currentCourse.setStartdate(course.getStartdate());
         }
         return courserepo.save(currentCourse);
     }

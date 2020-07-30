@@ -31,6 +31,8 @@ public class Course extends Auditable
 
     private String location;
 
+    private String startdate;
+
     @org.springframework.data.annotation.Transient
     public boolean hasvalueforsizecapacity = false;
     private long sizecapacity;
@@ -61,6 +63,7 @@ public class Course extends Auditable
                   int duration,
                   String intensitylevel,
                   String location,
+                  String startdate,
                   long sizecapacity,
                   User instructor)
     {
@@ -70,6 +73,7 @@ public class Course extends Auditable
         this.duration = duration;
         this.intensitylevel = intensitylevel;
         this.location = location;
+        this.startdate = startdate;
         this.sizecapacity = sizecapacity;
         this.instructor = instructor;
     }
@@ -148,6 +152,14 @@ public class Course extends Auditable
     {
         hasvalueforduration = true;
         this.duration = duration;
+    }
+
+    public String getStartdate() {
+        return startdate;
+    }
+
+    public void setStartdate(String startdate) {
+        this.startdate = startdate;
     }
 
     public String getIntensitylevel()

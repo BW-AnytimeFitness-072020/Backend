@@ -57,6 +57,46 @@ public class CourseController {
 
 
     //Search mapping
+    @GetMapping(value = "/times/{startTime}", produces = {"application/json"})
+    public ResponseEntity<?> searchByTime(@PathVariable int startTime) {
+        List<Course> c = courseService.findByStarttime(startTime);
+        return new ResponseEntity<>(c, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/dates/{startdate}", produces = {"application/json"})
+    public ResponseEntity<?> searchByDate(@PathVariable String startdate) {
+        List<Course> c = courseService.findByStartdate(startdate);
+        return new ResponseEntity<>(c, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/durations/{duration}", produces = {"application/json"})
+    public ResponseEntity<?> searchByDuration(@PathVariable int duration) {
+        List<Course> c = courseService.findByDuration(duration);
+        return new ResponseEntity<>(c, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/types/{type}", produces = {"application/json"})
+    public ResponseEntity<?> searchByType(@PathVariable String type) {
+        List<Course> c = courseService.findByType(type);
+        return new ResponseEntity<>(c, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/levels/{intensitylevel}", produces = {"application/json"})
+    public ResponseEntity<?> searchByLevel(@PathVariable String intensitylevel) {
+        List<Course> c = courseService.findByIntensitylevel(intensitylevel);
+        return new ResponseEntity<>(c, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/locations/{location}", produces = {"application/json"})
+    public ResponseEntity<?> searchByLocation(@PathVariable String location) {
+        List<Course> c = courseService.findByLocation(location);
+        return new ResponseEntity<>(c, HttpStatus.OK);
+    }
 
 
     //class time
