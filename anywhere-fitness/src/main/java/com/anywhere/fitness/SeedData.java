@@ -100,21 +100,22 @@ public class SeedData
 //        (String coursename,
 //            String type,
 //        int starttime,
+//        String startdate
 //        int duration,
 //        String intensitylevel,
 //        String location,
 //        long sizecapacity,
 //        User instructor)
-        Course c2 = new Course("Wing Chun", "Combat",6, 45, "Easy", "Virginia",15 ,u5);
-        Course c7 = new Course("Jiu Jitsu", "Combat",19, 30, "Hard", "Brazil",110 ,u5);
-        Course c6 = new Course("Hip Hop", "Dance",9, 60, "Easy", "Texas",45 ,u5);
-        Course c3 = new Course("Tibo", "Cardio",19, 30, "Medium", "California",100 ,u3);
-        Course c4 = new Course("YOGA", "cardio",8, 45, "Easy", "Indiana",55 ,u3);
-        Course c9 = new Course("HIIT", "Cardio",19, 30, "Medium", "Kentucky",105 ,u3);
-        Course c10 = new Course("Parkour", "Cardio",17, 80, "Hard", "New York",55 ,u3);
-        Course c1 = new Course("Zoomba", "Cardio",12, 50, "Medium", "Florida",25 ,u1);
-        Course c5 = new Course("Ballet", "Dance",13, 50, "Hard", "New Jersey",25 ,u1);
-        Course c8 = new Course("YOGA", "cardio",8, 45, "Easy", "Michigan",55 ,u1);
+        Course c2 = new Course("Wing Chun", "Combat",6, 45, "Easy", "Virginia", "2020-01-01",15 ,u5);
+        Course c7 = new Course("Jiu Jitsu", "Combat",19, 30, "Hard", "Brazil", "2020-01-10",110 ,u5);
+        Course c6 = new Course("Hip Hop", "Dance",9, 60, "Easy", "Texas", "2020-01-10",45 ,u5);
+        Course c3 = new Course("Tibo", "Cardio",19, 30, "Medium", "California", "2020-01-10",100 ,u3);
+        Course c4 = new Course("YOGA", "cardio",8, 45, "Easy", "Indiana", "2020-01-10",55 ,u3);
+        Course c9 = new Course("HIIT", "Cardio",19, 30, "Medium", "Kentucky", "2020-01-10",105 ,u3);
+        Course c10 = new Course("Parkour", "Cardio",17, 80, "Hard", "New York", "2020-01-10",55 ,u3);
+        Course c1 = new Course("Zoomba", "Cardio",12, 50, "Medium", "Florida", "2020-01-10",25 ,u1);
+        Course c5 = new Course("Ballet", "Dance",13, 50, "Hard", "New Jersey", "2020-01-10",25 ,u1);
+        Course c8 = new Course("YOGA", "cardio",8, 45, "Easy", "Michigan", "2020-01-10",55 ,u1);
         u4.getCourses().add(new UserCourse(u4,c1));
         u5.getCourses().add(new UserCourse(u5,c3));
         u5.getCourses().add(new UserCourse(u5,c1));

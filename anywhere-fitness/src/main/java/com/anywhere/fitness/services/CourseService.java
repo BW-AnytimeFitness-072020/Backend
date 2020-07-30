@@ -37,6 +37,16 @@ public interface CourseService
      */
     List<Course> findByStarttime(int time);
 
+    List<Course> findByDuration(int duration);
+
+    List<Course> findByStartdate(String startdate);
+
+    List<Course> findByType(String type);
+
+    List<Course> findByIntensitylevel(String intensitylevel);
+
+    List<Course> findByLocation(String location);
+
     Course save(Course course);
 
     Course update(Course course, long id);
