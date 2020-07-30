@@ -2,6 +2,8 @@ package com.anywhere.fitness.services;
 
 import com.anywhere.fitness.models.User;
 
+import java.util.List;
+
 public interface UserService
 {
 
@@ -17,4 +19,6 @@ public interface UserService
     User findUserByName(String name);
 
     void deleteAll();
+
+    List<User> findAllUsers();
 }

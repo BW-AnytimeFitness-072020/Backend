@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Transactional
 @Service(value = "userService")
@@ -197,5 +199,15 @@ public class UserServiceImpl implements UserService
             throw new EntityNotFoundException("User name " + name + " not found!");
         }
         return uu;
+    }
+
+    @Override
+    public List<User> findAllUsers()
+    {
+        List<User> rtn = new ArrayList<>();
+        userrepo.findAll()
+        .iterator()
+        .forEachRemaining(rtn::add);
+        return rtn;
     }
 }
