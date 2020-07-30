@@ -2,10 +2,12 @@ package com.anywhere.fitness.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,9 +25,11 @@ public class User extends Auditable
     private String username;
 
     @Column(nullable = false)
+    @Email
     private String email;
 
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL)
@@ -38,7 +42,6 @@ public class User extends Auditable
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = "user", allowSetters = true)
-//    @JsonIgnore
     private Set<UserCourse> courses = new HashSet<>();
 
     public User()
@@ -51,7 +54,7 @@ public class User extends Auditable
     {
         this.username = username;
         this.email = email;
-        this.password = password;
+        setPassword(password);
     }
 
     public long getUserid()
@@ -96,8 +99,8 @@ public class User extends Auditable
 
     public void setPassword(String password)
     {
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        this.password = password;//Encoder.encode(password);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.password = passwordEncoder.encode(password);
     }
 
 

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+
 @Transactional
 @Service(value = "userService")
 public class UserServiceImpl implements UserService
@@ -21,6 +23,9 @@ public class UserServiceImpl implements UserService
 
     @Autowired
     private RoleService roleService;
+    
+    @Autowired
+    private HelperFunctions helperFunctions;
 
     @Transactional
     @Override
@@ -33,7 +38,7 @@ public class UserServiceImpl implements UserService
             newuser.setUserid(user.getUserid());
         }
         newuser.setEmail(user.getEmail());
-        newuser.setPassword(user.getPassword());
+        newuser.setPasswordNoEncrypt(user.getPassword());
         newuser.setUsername(user.getUsername());
 
         newuser.getCourses().clear();
@@ -63,50 +68,134 @@ public class UserServiceImpl implements UserService
         return userrepo.save(newuser);
     }
 
+    @Transactional
     @Override
     public void deleteAll()
     {
         userrepo.deleteAll();
     }
 
+    @Transactional
     @Override
-    public User update(User user)
+    public User update(User user, long id)
     {
-        return null;
+        User updateuser = userrepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("User ID: "+ id +" Not Found..."));
+        if(helperFunctions.isAuthorizedToMakeChange(updateuser.getUsername()))
+        {
+            if (user.getEmail() != null)
+            {
+                updateuser.setEmail(user.getEmail());
+            }
+            if (user.getPassword() != null)
+            {
+                updateuser.setPasswordNoEncrypt(user.getPassword());
+            }
+            if (user.getUsername() != null)
+            {
+                updateuser.setUsername(user.getUsername());
+            }
+
+            if (user.getCourses()
+                    .size() > 0)
+            {
+                updateuser.getCourses()
+                        .clear();
+                for (UserCourse uc : user.getCourses())
+                {
+//            Course course = courseService.findById(uc.getCourse().getCourseid());
+
+//            UserCourse nuc = new UserCourse(newuser,course);
+//            uc.setUser(newuser);
+                    updateuser.getCourses()
+                            .add(new UserCourse(updateuser,
+                                    uc.getCourse()));
+                }
+            }
+
+            if (user.getRoles()
+                    .size() > 0)
+            {
+                updateuser.getRoles()
+                        .clear();
+                for (UserRole ur : user.getRoles())
+                {
+                    Role role = roleService.findRoleById(ur.getRole()
+                            .getRoleid());
+
+                    updateuser.getRoles()
+                            .add(new UserRole(updateuser,
+                                    role));
+                }
+            }
+
+            if (user.getInstructorcourses()
+                    .size() > 0)
+            {
+                updateuser.getInstructorcourses()
+                        .clear();
+                for (Course c : user.getInstructorcourses())
+                {
+                    Course course = courseService.findCourseById(c.getCourseid());
+                    course.setInstructor(updateuser);
+
+                    updateuser.getInstructorcourses()
+                            .add(course);
+                }
+            }
+
+            return userrepo.save(updateuser);
+        }
+        throw new ResourceNotFoundException("User Not Authorized to Make This Change");
     }
 
+    @Transactional
     @Override
     public void delete(long id)
     {
         if(userrepo.findById(id).isPresent())
         {
-            userrepo.deleteById(id);
+            User u = userrepo.findById(id).orElseThrow(()->new ResourceNotFoundException("User ID: " + id + " Not Found..."));
+            if(helperFunctions.isAuthorizedToMakeChange(u.getUsername()))
+            {
+                userrepo.deleteById(id);
+            }
         }else
         {
             throw new ResourceNotFoundException("User ID: " + id + " Not Found...");
         }
     }
 
+    @Transactional
     @Override
     public User addUserCourse(long courseid, String username)
     {
-        User u = userrepo.findByUsername(username.toLowerCase());
-        Course c = courseService.findCourseById(courseid);
-        u.getCourses().add(new UserCourse(u,c));
 
-        return null;
+        if(helperFunctions.isAuthorizedToMakeChange(username))
+        {
+            User u = userrepo.findByUsername(username.toLowerCase());
+            Course c = courseService.findCourseById(courseid);
+            u.getCourses()
+                    .add(new UserCourse(u,
+                            c));
+//        c.getUsers().add(new UserCourse(u,c));
+
+            return u;
+        }
+        throw new EntityNotFoundException("User name '" + username + "' not found!");
     }
 
-    @Override
-    public void removeUserCourse(long courseid, String username)
-    {
-        User u = userrepo.findByUsername(username.toLowerCase());
-        Course c = courseService.findCourseById(courseid);
-        for(UserCourse uc : u.getCourses()){
-            if(uc.getCourse().getCourseid() == courseid){
-                u.getCourses().remove(uc);
-            }
-        }
 
+
+    @Transactional
+    @Override
+    public User findUserByName(String name)
+    {
+        
+        User uu = userrepo.findByUsername(name.toLowerCase());
+        if (uu == null)
+        {
+            throw new EntityNotFoundException("User name " + name + " not found!");
+        }
+        return uu;
     }
 }

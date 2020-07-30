@@ -124,6 +124,77 @@ public class OpenController
                 HttpStatus.CREATED);
     }
 
+
+    @PostMapping(value = "/createinstructor",
+            consumes = {"application/json"},
+            produces = {"application/json"})
+    public ResponseEntity<?> addinstructor(
+            HttpServletRequest httpServletRequest,
+            @Valid
+            @RequestBody
+                    UserMinimum newminuser)
+            throws
+            URISyntaxException
+    {
+        // Create the user
+        User newuser = new User();
+
+        newuser.setUsername(newminuser.getUsername());
+        newuser.setPassword(newminuser.getPassword());
+        newuser.setEmail(newminuser.getEmail());
+
+        // add the default role of user
+        Set<UserRole> newRoles = new HashSet<>();
+        newRoles.add(new UserRole(newuser,
+                roleService.findByName("admin")));
+        newuser.setRoles(newRoles);
+
+        newuser = userService.save(newuser);
+
+        // set the location header for the newly created resource
+        // The location comes from a different controller!
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newUserURI = ServletUriComponentsBuilder.fromUriString(httpServletRequest.getServerName() + ":" + httpServletRequest.getLocalPort() + "/users/user/{userId}")
+                .buildAndExpand(newuser.getUserid())
+                .toUri();
+        responseHeaders.setLocation(newUserURI);
+
+        // return the access token
+        // To get the access token, surf to the endpoint /login just as if a client had done this.
+        RestTemplate restTemplate = new RestTemplate();
+        String requestURI = "http://" + httpServletRequest.getServerName() + ":" + httpServletRequest.getLocalPort() + "/login";
+
+        List<MediaType> acceptableMediaTypes = new ArrayList<>();
+        acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setAccept(acceptableMediaTypes);
+        headers.setBasicAuth(System.getenv("OAUTHCLIENTID"),
+                System.getenv("OAUTHCLIENTSECRET"));
+
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("grant_type",
+                "password");
+        map.add("scope",
+                "read write trust");
+        map.add("username",
+                newminuser.getUsername());
+        map.add("password",
+                newminuser.getPassword());
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map,
+                headers);
+
+        String theToken = restTemplate.postForObject(requestURI,
+                request,
+                String.class);
+
+        return new ResponseEntity<>(theToken,
+                responseHeaders,
+                HttpStatus.CREATED);
+    }
+
     /**
      * Prevents no favicon.ico warning from appearing in the logs. @ApiIgnore tells Swagger to ignore documenting this as an endpoint.
      */

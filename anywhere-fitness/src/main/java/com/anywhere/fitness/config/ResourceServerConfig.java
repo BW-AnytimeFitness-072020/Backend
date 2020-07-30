@@ -52,6 +52,7 @@ public class ResourceServerConfig
                              "/v2/api-docs",
                              "/webjars/**",
                              "/createnewuser",
+                        "/createinstructor",
                         "/login")
                 .permitAll()
                 .antMatchers("/users/**",
