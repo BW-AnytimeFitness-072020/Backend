@@ -61,8 +61,8 @@ public class SeedData
 //        r3 = roleService.save(r3);
         // admin, user
         User u1 = new User("admin",
-                "password",
-                "$2a$04$ipZV/EonKZrdrlyKIJGLH.awQjAprT6Taf8MIRIS//yqjaYfrxYwa");
+                "admin@local.local",
+                "password");
         u1.getRoles()
                 .add(new UserRole(u1, r1));
         u1.getRoles()
@@ -70,27 +70,27 @@ public class SeedData
         u1 = userService.save(u1);
         // data, user
         User u2 = new User("cinnamon",
-                "1234567",
-                "$2a$04$ipZV/EonKZrdrlyKIJGLH.awQjAprT6Taf8MIRIS//yqjaYfrxYwa");
+                "cinnamon@local.local",
+                "1234567");
         u2.getRoles()
                 .add(new UserRole(u2,r2));
         u2 = userService.save(u2);
         // user
         User u3 = new User("barnbarn",
-                "ILuvM4th!",
-                "$2a$04$ipZV/EonKZrdrlyKIJGLH.awQjAprT6Taf8MIRIS//yqjaYfrxYwa");
+                "barnbarn@local.local",
+                "ILuvM4th!");
         u3.getRoles()
                 .add(new UserRole(u3, r1));
         u3 = userService.save(u3);
         User u4 = new User("puttat",
-                "password",
-                "puttat@school.lambda");
+                "puttat@school.lambda",
+                "password");
         u4.getRoles()
                 .add(new UserRole(u4, r2));
         u4 = userService.save(u4);
         User u5 = new User("misskitty",
-                "password",
-                "$2a$04$ipZV/EonKZrdrlyKIJGLH.awQjAprT6Taf8MIRIS//yqjaYfrxYwa");
+                "misskitty@local.local",
+                "password");
         u5.getRoles()
                 .add(new UserRole(u5, r1));
         u5 = userService.save(u5);

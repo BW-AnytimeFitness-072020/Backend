@@ -1,6 +1,11 @@
 package com.anywhere.fitness.services;
 
+import com.anywhere.fitness.exceptions.ResourceNotFoundException;
 import com.anywhere.fitness.models.ValidationError;
+import org.apache.tomcat.util.http.parser.Authorization;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
@@ -39,5 +44,18 @@ public class HelperFunctionsImpl
             }
         }
         return listVE;
+    }
+
+    @Override
+    public boolean isAuthorizedToMakeChange(String username)
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if(username.equalsIgnoreCase(authentication.getName().toLowerCase()) || authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))){
+            return true;
+        }else
+        {
+            throw new ResourceNotFoundException(authentication.getName()+" Not Authorized to Make This Change");
+        }
     }
 }
