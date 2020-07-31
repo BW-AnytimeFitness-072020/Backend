@@ -55,11 +55,11 @@ public class ResourceServerConfig
                         "/createinstructor",
                         "/login")
                 .permitAll()
-//                .antMatchers("/users/**",
-//                             "/useremails/**",
-//                             "/oauth/revoke-token",
-//                             "/logout")
-//                .authenticated()
+                .antMatchers("/users/**",
+                             "/useremails/**",
+                             "/oauth/revoke-token",
+                             "/logout")
+                .authenticated()
                 .antMatchers(HttpMethod.POST,"/courses/**")
                 .hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/courses/**")
