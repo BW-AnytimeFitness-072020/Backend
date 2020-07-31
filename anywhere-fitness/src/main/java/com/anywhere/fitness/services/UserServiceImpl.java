@@ -196,7 +196,7 @@ public class UserServiceImpl implements UserService
         User uu = userrepo.findByUsername(name.toLowerCase());
         if (uu == null)
         {
-            throw new EntityNotFoundException("User name " + name + " not found!");
+            throw new ResourceNotFoundException("User name " + name + " not found!");
         }
         return uu;
     }
@@ -210,4 +210,13 @@ public class UserServiceImpl implements UserService
         .forEachRemaining(rtn::add);
         return rtn;
     }
+
+    @Override
+    public User findById(long id)
+    {
+        return userrepo.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("No User Found With ID " + id));
+    }
+
+
 }

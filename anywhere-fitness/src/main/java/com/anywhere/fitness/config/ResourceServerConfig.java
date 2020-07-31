@@ -55,20 +55,18 @@ public class ResourceServerConfig
                         "/createinstructor",
                         "/login")
                 .permitAll()
-                .antMatchers("/users/**",
-                             "/useremails/**",
-                             "/oauth/revoke-token",
-                             "/logout")
-                .authenticated()
-                .antMatchers("/roles/**")
-                .hasAnyRole("ADMIN", "DATA")
-                .antMatchers(HttpMethod.GET,"/books/books")
-                .hasAnyRole("ADMIN", "DATA")
-                .antMatchers(HttpMethod.POST, "/books/book")
+//                .antMatchers("/users/**",
+//                             "/useremails/**",
+//                             "/oauth/revoke-token",
+//                             "/logout")
+//                .authenticated()
+                .antMatchers(HttpMethod.POST,"/courses/**")
                 .hasAnyRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/books/book")
+                .antMatchers(HttpMethod.PUT, "/courses/**")
                 .hasAnyRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/books/book")
+                .antMatchers(HttpMethod.PATCH, "/courses/**")
+                .hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/courses/**")
                 .hasAnyRole("ADMIN")
                 .and()
                 .exceptionHandling()

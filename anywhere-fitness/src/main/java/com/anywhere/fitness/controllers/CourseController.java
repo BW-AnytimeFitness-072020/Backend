@@ -7,6 +7,7 @@ import com.anywhere.fitness.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,17 +37,20 @@ public class CourseController {
      return new ResponseEntity<>(c, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     //http://localhost:2019/courses/course
-    @PostMapping(value = "/course", consumes = "application/json")
+    @PostMapping(value = "/course",produces = {"application/json"}, consumes = {"application/json"})
     public ResponseEntity<?> addNewCourse(@Valid @RequestBody Course newCourse) {
         User u = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
         newCourse.setCourseid(0);
-        newCourse = courseService.save(newCourse, SecurityContextHolder.getContext().getAuthentication().getName());
-        return new ResponseEntity<>(null,
-                HttpStatus.CREATED);
+//        System.out.println(u.getUsername());
+        newCourse.setInstructor(userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName()));
+        newCourse = courseService.save(newCourse);
+        return new ResponseEntity<>(newCourse,HttpStatus.CREATED);
     }
 
     //UPDATE mapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping(value = "/courses/{id}",
             consumes = "application/json")
     public ResponseEntity<?> updateFullCourse(
@@ -57,7 +61,8 @@ public class CourseController {
                     long id)
     {
         updateCourse.setCourseid(id);
-        courseService.save(updateCourse, SecurityContextHolder.getContext().getAuthentication().getName());
+        updateCourse.setInstructor(userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName()));
+        courseService.save(updateCourse);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -116,11 +121,13 @@ public class CourseController {
 
 
     //http://localhost:2019/courses/courses{id}
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(value = "/course/{id}")
     public ResponseEntity<?> deleteByCourseId(@PathVariable long id) {
         courseService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
     @GetMapping(value = "/getuserinfo",
             produces = {"application/json"})

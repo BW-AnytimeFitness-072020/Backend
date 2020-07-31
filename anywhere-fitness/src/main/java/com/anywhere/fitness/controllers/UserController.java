@@ -28,7 +28,7 @@ public class UserController {
 
 
     @PutMapping(value = "/user/{id}", consumes = {"application/json"})
-    public ResponseEntity<?> updateCourse(@Valid @RequestBody User user,
+    public ResponseEntity<?> updateUser(@Valid @RequestBody User user,
                                           @PathVariable long id){
         user.setUserid(id);
         userService.save(user);

@@ -101,9 +101,8 @@ public class CourseServiceImpl
         newCourse.setCoursename(course.getCoursename());
         newCourse.setDuration(course.getDuration());
 
-        if (course.getInstructor() != null) {
-            newCourse.setInstructor(course.getInstructor());
-        }
+        newCourse.setInstructor(course.getInstructor());
+
 
         newCourse.setIntensitylevel(course.getIntensitylevel());
         newCourse.setLocation(course.getLocation());
@@ -136,7 +135,9 @@ public class CourseServiceImpl
 
             if (course.getInstructor() != null) {
                 newCourse.setInstructor(instructor);
+                instructor.getInstructorcourses().add(newCourse);
             }
+
 
             newCourse.setIntensitylevel(course.getIntensitylevel());
             newCourse.setLocation(course.getLocation());
