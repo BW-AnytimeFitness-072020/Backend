@@ -41,7 +41,7 @@ public class CourseServiceImpl
     @Override
     public Course findCourseById(long id) {
         return courserepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Course with id " + id + " Not Found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Course with id " + id + " Not Found"));
     }
 
     @Override
