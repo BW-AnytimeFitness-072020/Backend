@@ -1,15 +1,19 @@
 package com.anywhere.fitness;
 
-import org.junit.jupiter.api.Test;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@SpringBootTest
-class FitnessApplicationTests
+//@EnableJpaAuditing
+@SpringBootApplication
+public class FitnessApplicationTests
 {
 
-    @Test
-    void contextLoads()
+    public static void main(String[] args)
     {
+        SpringApplication.run(FitnessApplication.class,
+                args);
     }
 
 }

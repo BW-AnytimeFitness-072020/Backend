@@ -41,7 +41,7 @@ public class CourseServiceImpl
     @Override
     public Course findCourseById(long id) {
         return courserepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Course with id " + id + " Not Found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Course with id " + id + " Not Found"));
     }
 
     @Override
@@ -116,7 +116,6 @@ public class CourseServiceImpl
         for(UserCourse uc : course.getUsers()) {
             newCourse.getUsers().add(new UserCourse(uc.getUser(), newCourse));
         }
-
         return courserepo.save(newCourse);
     }
 
@@ -124,31 +123,27 @@ public class CourseServiceImpl
     {
         Course newCourse = new Course();
         User instructor = userRepo.findByUsername(username);
-
         if(helperfunctions.isAuthorizedToMakeChange(instructor.getUsername())) {
-
             if (course.getCourseid() != 0) {
                 courserepo.findById(course.getCourseid())
                         .orElseThrow(() -> new EntityNotFoundException("Course id " + course.getCourseid() + " Not Found"));
             }
             newCourse.setCoursename(course.getCoursename());
             newCourse.setDuration(course.getDuration());
-
             if (course.getInstructor() != null) {
                 newCourse.setInstructor(instructor);
             }
-
             newCourse.setIntensitylevel(course.getIntensitylevel());
             newCourse.setLocation(course.getLocation());
             newCourse.setSizecapacity(course.getSizecapacity());
             newCourse.setStarttime(course.getStarttime());
             newCourse.setType(course.getType());
             newCourse.setStartdate(course.getStartdate());
-
             newCourse.getUsers().clear();
             for (UserCourse uc : course.getUsers()) {
                 newCourse.getUsers().add(new UserCourse(uc.getUser(), newCourse));
             }
+
             return courserepo.save(newCourse);
         } else throw new ResourceNotFoundException("You are not authorized to make changes");
     }
@@ -161,24 +156,31 @@ public class CourseServiceImpl
         if (course.getCoursename() != null) {
             currentCourse.setCoursename(course.getCoursename());
         }
+
         if (course.hasvalueforduration) {
             currentCourse.setDuration(course.getDuration());
         }
+
         if (course.getIntensitylevel() != null) {
             currentCourse.setIntensitylevel(course.getIntensitylevel());
         }
+
         if (course.getLocation() != null) {
             currentCourse.setLocation(course.getLocation());
         }
+
         if (course.hasvalueforsizecapacity) {
             currentCourse.setSizecapacity(course.getSizecapacity());
         }
+
         if (course.hasvalueforstarttime) {
             currentCourse.setStarttime(course.getStarttime());
         }
+
         if (course.getType() != null) {
             currentCourse.setType(course.getType());
         }
+
         if (course.getStartdate() != null) {
             currentCourse.setStartdate(course.getStartdate());
         }

@@ -42,7 +42,7 @@ public class CourseController {
         User u = userService.findUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
         newCourse.setCourseid(0);
         newCourse = courseService.save(newCourse, SecurityContextHolder.getContext().getAuthentication().getName());
-        return new ResponseEntity<>(null,
+        return new ResponseEntity<>(newCourse,
                 HttpStatus.CREATED);
     }
 
